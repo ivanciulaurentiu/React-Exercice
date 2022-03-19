@@ -7,25 +7,33 @@ class App extends React.Component{
     super(); // spune sa aduca ce trebuie din react.component
     this.state = {
       background:'pink',
-      user:[
-        {
-          name:"Laurentiu",
-          email:"ivan.laur@yahoo.com",
-          isGoldClient:true
-        },
-        {
-          name:"Ion",
-          email:"ivan.ion@yahoo.com",
-          isGoldClient:false
-        }
-      ]
+      user:[]
     };// initializam starea
   }
 
   componentDidMount () {
     console.log("App.js was mounted")
-  }
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => {
+       return  response.json();
+      })
+      .then((json) => {
+        console.log(json);
+        const firstTreeUsers = json.filter( user => user.id <= 3)
+        console.log(firstTreeUsers);
+        firstTreeUsers.forEach((user)=>{
+          user.isGoldClient = true;
+        })
+        //adaugati fiecarui use o proprietate numita isGoldClient
+        // cu valoare true
+        this.setState({user: firstTreeUsers})
 
+      })
+       
+  }
+  componentDidUpdate(){
+    console.log('App.js was updated')
+  }
   handleBackgroundChange(event){
     console.log(event.target.value);
     const userBackground = event.target.value;
@@ -34,12 +42,12 @@ class App extends React.Component{
   }
 
   render(){  //metoda render de a se afisa pe ecran
-    console.log(this.state);
+   
     return (
      <div className="App" style={{background: this.state.background}}> 
        <h1>Lista utilizator</h1>
       {
-        this.state.background !== 'f00000' ? <UserList users = {this.state.user}/> : null
+        this.state.background !== '#000000' ? <UserList users = {this.state.user}/> : null
       }
       {/* <UserList users = {this.state.user}/> */}
 

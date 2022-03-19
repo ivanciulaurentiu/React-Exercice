@@ -3,10 +3,16 @@ import UserItem from "./UserItem";
 
 class UserList extends React.Component{
     constructor(props) {
+        console.log('UserList constructor ha been called')
         super(props);
         this.state={};
     }
-
+componentDidMount(){
+    console.log('UserList was mounted');
+}
+componentWillUnmount(){
+    console.log('UserList will be unmounted');
+}
     render(){
         return(
             <div>
