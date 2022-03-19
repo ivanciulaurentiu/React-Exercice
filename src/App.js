@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import UserItem from './components/UserItem';
+import UserList from './components/UserList';
 
 class App extends React.Component{
   constructor(){
@@ -22,6 +22,9 @@ class App extends React.Component{
     };// initializam starea
   }
 
+  componentDidMount () {
+    console.log("App.js was mounted")
+  }
 
   handleBackgroundChange(event){
     console.log(event.target.value);
@@ -35,18 +38,10 @@ class App extends React.Component{
     return (
      <div className="App" style={{background: this.state.background}}> 
        <h1>Lista utilizator</h1>
-
-        <UserItem 
-          name={this.state.user[0].name} 
-          email={this.state.user[0].email}
-          isGoldClient={this.state.user[0].isGoldClient}
-        />
-
-        <UserItem
-          name={this.state.user[1].name} 
-          email={this.state.user[1].email}
-          isGoldClient={this.state.user[1].isGoldClient}
-        />
+      {
+        this.state.background !== 'f00000' ? <UserList users = {this.state.user}/> : null
+      }
+      {/* <UserList users = {this.state.user}/> */}
 
        <input type="color" onChange={(event)=>this.handleBackgroundChange(event)}/>
      </div>
